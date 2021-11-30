@@ -12,7 +12,6 @@ public class sortingRun
 				selectionSort.selectionSort(null);
 				
 				userChoice();
-				System.out.println();
 			}
 		
 		public static void userChoice()
