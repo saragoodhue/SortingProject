@@ -1,43 +1,73 @@
 
 public class MergeSort
 	{
-		static void merge(int[] elements, int from, int mid, int to, int[] temp)
+		public static void merge(int[] left_arr, int[] right_arr, int[] arr, int left_size, int j)
 			{
-				int i = from;
-				int j = mid + 1;
-				int k = from;
-				while (i <= mid && j <= to)
+
+				int i = 0, l = 0, r = 0;
+				// The while loops check the conditions for merging
+				while (l < left_size && r < j)
 					{
-						if (elements[i] < elements[j])
+
+						if (left_arr[l] < right_arr[r])
 							{
-								temp[k] = elements[i];
-								i++;
-							} else
+								arr[i++] = left_arr[l++];
+							} 
+						else
 							{
-								temp[k] = elements[j];
-								j++;
+								arr[i++] = right_arr[r++];
 							}
-						k++;
 					}
-
-				while (i <= mid)
+				while (l < left_size)
 					{
-						temp[k] = elements[i];
-						i++;
-						k++;
+						arr[i++] = left_arr[l++];
 					}
-
-				while (j <= to)
+				while (r < j)
 					{
-						temp[k] = elements[j];
-						j++;
-						k++;
+						arr[i++] = right_arr[r++];
 					}
-				for (k = from; k <= to; k++)
-					{
-						elements[k] = temp[k];
-					}
-
 			}
 
+		public static void mergeSort(int[] arr, int len)
+			{
+				if (len < 2)
+					{
+						return;
+					}
+
+				int mid = len / 2;
+				int[] left_arr = new int[mid];
+				int[] right_arr = new int[len - mid];
+
+				// Dividing array into two and copying into two separate arrays
+				int k = 0;
+				for (int i = 0; i < len; ++i)
+					{
+						if (i < mid)
+							{
+								left_arr[i] = arr[i];
+							} 
+						else
+							{
+								right_arr[k] = arr[i];
+								k = k + 1;
+							}
+					}
+				// Recursively calling the function to divide the subarrays further
+				mergeSort(left_arr, mid);
+				mergeSort(right_arr, len - mid);
+				// Calling the merge method on each subdivision
+				merge(left_arr, right_arr, arr, mid, len - mid);
+			}
+
+		public static void main(String args[])
+			{
+				int[] array =
+					{ 12, 1, 10, 50, 5, 15, 45 };
+				mergeSort(array, array.length);
+				for (int i = 0; i < array.length; ++i)
+					{
+						System.out.print(array[i] + " ");
+					}
+			}
 	}
